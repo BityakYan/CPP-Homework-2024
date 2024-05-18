@@ -3,6 +3,24 @@
 #include <vector>
 #include <chrono>
 
+void writeRandomNumbersToFile(const std::string& filename, int count) {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+        return;
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distr(1, 1000000);
+
+    for (int i = 0; i < count; ++i) {
+        file << distr(gen) << std::endl;
+    }
+
+    file.close();
+}
+
 int partition(std::vector<int> &arr, int low, int high) {
     int pivot = arr[high];
     int i = low - 1;
